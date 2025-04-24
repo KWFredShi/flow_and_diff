@@ -2,11 +2,7 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
-import torch.nn as nn
-import torch.nn.functional as F
-from torchvision.utils import make_grid
 from model import FlowVAE, flow_vae_loss
-import os
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 transform = transforms.Compose([transforms.ToTensor()])
@@ -32,9 +28,7 @@ for epoch in range(10):
         total_loss += loss.item()
     print(f"Epoch {epoch+1}: Loss = {total_loss / len(mnist):.4f}")
 
-# -----------------------------
-# Visualize reconstructions
-# -----------------------------
+
 def show_images(images, title):
     images = images.view(-1, 1, 28, 28).detach().cpu()
     grid = torchvision.utils.make_grid(images, nrow=8)
@@ -51,10 +45,7 @@ x_recon, _, _, _ = model(x)
 show_images(x, "Original MNIST Digits")
 show_images(x_recon, "Reconstructed Digits")
 
-# -----------------------------
-# Visualize generative samples
-# -----------------------------
-
+# Generate samples
 def generate_samples(model, num_samples=16):
     z0 = torch.randn(num_samples, model.flow.layers[0].dim).to(device)
     print(z0)

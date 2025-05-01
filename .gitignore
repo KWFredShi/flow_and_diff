@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+./flow_matching/MNIST_model.pth
+
+data/
+datasets/
